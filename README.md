@@ -109,7 +109,7 @@ Esta API permite **crear, gestionar y ejecutar mocks de servicios REST** de mane
 
 ### 📦 Pasos
 ```bash
-git clone 
+git clone https://github.com/DanielDubonDR/Challenge_Start.git
 cd challenge_start
 npm install
 cp .envTemplate .env
@@ -126,7 +126,7 @@ npm run dev
 ### 🧪 Modos de ejecución
 - 🛠️ Desarrollo: `npm run dev`
 - 🚀 Producción: `npm start`
-- 🧪 Pruebas: `npm test`
+- 🧪 Pruebas: `npm run test`
 
 ---
 
