@@ -5,6 +5,89 @@
 ### 📘 Descripción
 Esta API permite **crear, gestionar y ejecutar mocks de servicios REST** de manera dinámica. Es ideal para desarrollo, testing y simulación de servicios externos.
 
+### Indice:
+
+- [🚀 Challenge\_Start](#-challenge_start)
+  - [🔧 API para Mocks de Servicios REST](#-api-para-mocks-de-servicios-rest)
+    - [📘 Descripción](#-descripción)
+    - [Indice:](#indice)
+    - [✨ Características](#-características)
+  - [⚙️ Instalación](#️-instalación)
+    - [📋 Requisitos previos](#-requisitos-previos)
+    - [📦 Pasos](#-pasos)
+    - [🌐 Variables de Entorno](#-variables-de-entorno)
+    - [🧪 Modos de ejecución](#-modos-de-ejecución)
+  - [📡 Endpoints](#-endpoints)
+    - [🔧 Configuración de Mocks](#-configuración-de-mocks)
+    - [🔍 Utilidades](#-utilidades)
+    - [🧪 Ejecución de Mocks](#-ejecución-de-mocks)
+  - [🧮 Operadores de Condiciones](#-operadores-de-condiciones)
+  - [🔁 Variables de Template](#-variables-de-template)
+  - [🚨 Códigos de Error](#-códigos-de-error)
+  - [🧰 Uso](#-uso)
+    - [Configurar un Mock](#configurar-un-mock)
+    - [Ejecutar el Mock](#ejecutar-el-mock)
+    - [Mocks con Condiciones](#mocks-con-condiciones)
+    - [Ejecutar con Condiciones](#ejecutar-con-condiciones)
+    - [Templates Dinámicos](#templates-dinámicos)
+    - [Ejecutar con Template](#ejecutar-con-template)
+    - [Respuesta](#respuesta)
+    - [Configuracion con token](#configuracion-con-token)
+    - [Ejecución de Mocks con token](#ejecución-de-mocks-con-token)
+  - [🔐 Autenticación](#-autenticación)
+  - [🚦 Rate Limiting](#-rate-limiting)
+- [🌐 Ejemplos de Uso con curl](#-ejemplos-de-uso-con-curl)
+  - [🔧 Configuración de Mocks](#-configuración-de-mocks-1)
+    - [✅ Crear Mock Básico](#-crear-mock-básico)
+      - [🧪 Probar Mock Básico](#-probar-mock-básico)
+    - [🧮 Mock con Condiciones](#-mock-con-condiciones)
+      - [🧪 Probar Mock con Condiciones (Respuesta Normal)](#-probar-mock-con-condiciones-respuesta-normal)
+      - [🧪 Probar Mock con Condiciones (Respuesta Premium)](#-probar-mock-con-condiciones-respuesta-premium)
+    - [🧩 Mock con Templates Dinámicos](#-mock-con-templates-dinámicos)
+      - [🧪 Probar Mock con Templates](#-probar-mock-con-templates)
+    - [📄 Mock con Respuesta XML](#-mock-con-respuesta-xml)
+      - [🧪 Probar Mock XML](#-probar-mock-xml)
+    - [📝 Mock con Respuesta Texto Plano](#-mock-con-respuesta-texto-plano)
+      - [🧪 Probar Mock Texto Plano](#-probar-mock-texto-plano)
+    - [🔐 Mock con Autenticación Requerida](#-mock-con-autenticación-requerida)
+      - [🧪 Probar Mock con Autenticación](#-probar-mock-con-autenticación)
+    - [❌ Mock de Error](#-mock-de-error)
+      - [🧪 Probar Mock de Error](#-probar-mock-de-error)
+  - [🔍 Consultar Mocks](#-consultar-mocks)
+    - [📋 Listar Todos los Mocks](#-listar-todos-los-mocks)
+    - [🎯 Obtener Mock Específico](#-obtener-mock-específico)
+    - [📊 Obtener Estadísticas](#-obtener-estadísticas)
+    - [🔎 Buscar Mocks por Ruta](#-buscar-mocks-por-ruta)
+    - [🔎 Buscar Mocks por Método](#-buscar-mocks-por-método)
+  - [✏️ Actualizar Mock](#️-actualizar-mock)
+  - [🗑️ Eliminar Mock](#️-eliminar-mock)
+  - [🧪 Ejecutar Mocks](#-ejecutar-mocks)
+    - [👥 Ejecutar Mock de Usuarios](#-ejecutar-mock-de-usuarios)
+    - [🛍️ Ejecutar Mock de Productos (Normal)](#️-ejecutar-mock-de-productos-normal)
+    - [🌟 Ejecutar Mock de Productos (Premium)](#-ejecutar-mock-de-productos-premium)
+    - [👋 Ejecutar Mock con Template](#-ejecutar-mock-con-template)
+    - [📄 Ejecutar Mock XML](#-ejecutar-mock-xml)
+    - [📝 Ejecutar Mock Texto Plano](#-ejecutar-mock-texto-plano)
+  - [❌ Casos de Error](#-casos-de-error)
+    - [🔒 Sin Token de Autorización](#-sin-token-de-autorización)
+    - [📊 Datos Inválidos](#-datos-inválidos)
+    - [🔍 Mock No Encontrado](#-mock-no-encontrado)
+    - [🌐 Ruta No Configurada](#-ruta-no-configurada)
+    - [🗑️ Eliminar Mock Inexistente](#️-eliminar-mock-inexistente)
+  - [🏥 Health Check](#-health-check)
+  - [📝 Notas Importantes](#-notas-importantes)
+  - [🎯 Respuestas de Ejemplo](#-respuestas-de-ejemplo)
+    - [✅ Creación Exitosa](#-creación-exitosa)
+    - [📊 Estadísticas](#-estadísticas)
+    - [🏥 Health Check](#-health-check-1)
+  - [🧪 Testing](#-testing)
+  - [🧱 Patrones Implementados](#-patrones-implementados)
+  - [🏗️ Arquitectura](#️-arquitectura)
+  - [🤝 Contribución](#-contribución)
+  - [📄 Licencia](#-licencia)
+
+
+
 ### ✨ Características
 - ✅ Configuración dinámica de mocks
 - 🌐 Soporte para múltiples métodos HTTP
@@ -69,6 +152,35 @@ npm run dev
 | Método | Endpoint | Descripción        | Necesita Autenticación |
 |--------|----------|--------------------|---------------|
 | *      | `/*`     | Ruta de Mock       | Depende de la configuracion del mock |
+
+---
+
+## 🧮 Operadores de Condiciones
+| Operador     | Descripción       |
+|--------------|-------------------|
+| `equals`     | Valor exacto      |
+| `contains`   | Contiene texto    |
+| `exists`     | Campo existe      |
+| `not_equals` | Valor diferente   |
+
+## 🔁 Variables de Template
+| Variable             | Descripción                  |
+|----------------------|------------------------------|
+| `{{body.campo}}`     | Campo del body               |
+| `{{params.campo}}`   | Parámetro de URL             |
+| `{{headers.campo}}`  | Header de la request         |
+| `{{timestamp}}`      | Timestamp actual             |
+| `{{user.id}}`        | ID del usuario autenticado   |
+
+## 🚨 Códigos de Error
+| Código | Descripción              |
+|--------|--------------------------|
+| 400    | Datos inválidos          |
+| 401    | No autenticado           |
+| 403    | Sin permisos             |
+| 404    | Mock no encontrado       |
+| 429    | Rate limit excedido      |
+| 500    | Error interno            |
 
 ---
 
@@ -520,9 +632,6 @@ curl -X GET http://localhost:4000/health
 
 - **Token de Autorización**: Debe tener más de 10 caracteres para operaciones de configuración
 - **Content-Type**: Siempre usar `application/json` para crear/actualizar mocks
-- **Variables de Template**: Usar `{{variable}}` para contenido dinámico
-- **Condiciones**: Soporta operadores `equals`, `contains`, `exists`, `not_equals`
-- **Rate Limiting**: 50 requests/minuto para configuración, 1000 requests/minuto para ejecución
 
 ## 🎯 Respuestas de Ejemplo
 
@@ -568,33 +677,6 @@ curl -X GET http://localhost:4000/health
 ```
 
 ---
-
-## 🧮 Operadores de Condiciones
-| Operador     | Descripción       |
-|--------------|-------------------|
-| `equals`     | Valor exacto      |
-| `contains`   | Contiene texto    |
-| `exists`     | Campo existe      |
-| `not_equals` | Valor diferente   |
-
-## 🔁 Variables de Template
-| Variable             | Descripción                  |
-|----------------------|------------------------------|
-| `{{body.campo}}`     | Campo del body               |
-| `{{params.campo}}`   | Parámetro de URL             |
-| `{{headers.campo}}`  | Header de la request         |
-| `{{timestamp}}`      | Timestamp actual             |
-| `{{user.id}}`        | ID del usuario autenticado   |
-
-## 🚨 Códigos de Error
-| Código | Descripción              |
-|--------|--------------------------|
-| 400    | Datos inválidos          |
-| 401    | No autenticado           |
-| 403    | Sin permisos             |
-| 404    | Mock no encontrado       |
-| 429    | Rate limit excedido      |
-| 500    | Error interno            |
 
 ## 🧪 Testing
 ```bash
