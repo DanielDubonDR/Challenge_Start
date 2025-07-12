@@ -15,6 +15,7 @@ Esta API permite **crear, gestionar y ejecutar mocks de servicios REST** de mane
   - [⚙️ Instalación](#️-instalación)
     - [📋 Requisitos previos](#-requisitos-previos)
     - [📦 Pasos](#-pasos)
+    - [Usando Docker](#usando-docker)
     - [🌐 Variables de Entorno](#-variables-de-entorno)
     - [🧪 Modos de ejecución](#-modos-de-ejecución)
   - [📡 Endpoints](#-endpoints)
@@ -116,6 +117,15 @@ cp .envTemplate .env
 # Configurar variables en .env
 npm run dev
 ```
+
+### Usando Docker
+```bash
+docker pull daniel499/challenge_start:1.5.0
+docker run -p 4000:4000 daniel499/challenge_start:1.5.0
+```
+- Acceder a la API en `http://localhost:4000`
+
+> [!NOTE] Para poder ejecutar los tests, es necesario levantar la API de forma local (descargar el repositorio)
 
 ### 🌐 Variables de Entorno
 | Variable          | Descripción                          |
@@ -290,7 +300,7 @@ Authorization: Bearer 123123123123123
 }
 ```
 
-**Nota:** debe ejecutarse con el mismo token de autenticación en la configuración del mock
+> [!NOTE] Debe ejecutarse con el mismo token de autenticación en la configuración del mock
 
 ### Ejecución de Mocks con token
 ```bash
