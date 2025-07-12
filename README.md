@@ -34,8 +34,8 @@ Esta API permite **crear, gestionar y ejecutar mocks de servicios REST** de mane
     - [Ejecutar con Template](#ejecutar-con-template)
     - [Respuesta](#respuesta)
     - [Configuracion con busqueda con route params](#configuracion-con-busqueda-con-route-params)
+    - [Ejecución de Mocks con busqueda con route params](#ejecución-de-mocks-con-busqueda-con-route-params)
     - [Configuracion con token](#configuracion-con-token)
-    - [Ejecutar con busqueda con route params](#ejecutar-con-busqueda-con-route-params)
     - [Ejecución de Mocks con token](#ejecución-de-mocks-con-token)
   - [🔐 Autenticación](#-autenticación)
   - [🚦 Rate Limiting](#-rate-limiting)
@@ -129,8 +129,8 @@ docker run -p 4000:4000 daniel499/challenge_start:1.5.0
 ```
 - Acceder a la API en `http://localhost:4000`
 
-> [!NOTE] \
-> Para poder ejecutar los tests, es necesario levantar la API de forma local (descargar el repositorio)
+  > [!NOTE]\
+  > Para poder ejecutar los tests, es necesario levantar la API de forma local (descargar el repositorio)
 
 ### 🌐 Variables de Entorno
 | Variable          | Descripción                          |
@@ -279,37 +279,7 @@ Content-Type: application/json
 }
 ```
 
-<!--  -->
-
 ### Configuracion con busqueda con route params
-```json
-POST /configure-mock
-Authorization: Bearer 123123123123123
-{
-    "route": "/api/v1/productos",
-    "method": "GET",
-    "statusCode": 200,
-    "responseContent": {
-        "products": [
-            { "id": 1, "name": "Producto Normal", "price": 100 }
-        ]
-    },
-    "conditions": [
-        {
-            "field": "params.categoria",
-            "operator": "equals",
-            "value": "premium",
-            "response": {
-                "products": [
-                    { "id": 1, "name": "Producto Premium", "price": 500 }
-                ]
-            }
-        }
-    ]
-}
-```
-
-### Configuracion con token
 ```json
 POST /configure-mock
 Authorization: Bearer 123123123123123
@@ -363,14 +333,39 @@ Authorization: Bearer 123123123123123
   ]
 }
 ```
-
-### Ejecutar con busqueda con route params
+### Ejecución de Mocks con busqueda con route params
 ```bash
 GET /api/v1/productos/prueba/1
 ```
 
-> [!NOTE] \
-> Debe ejecutarse con el mismo token de autenticación en la configuración del mock
+### Configuracion con token
+```json
+POST /configure-mock
+Authorization: Bearer 123123123123123
+{
+    "route": "/api/users",
+    "method": "GET",
+    "headers": {
+        "authorization": "Bearer user-token-456"
+    },
+    "statusCode": 200,
+    "responseContent": {
+        "users": [
+            {
+                "id": 1,
+                "name": "Juan"
+            },
+            {
+                "id": 2,
+                "name": "María"
+            }
+        ]
+    }
+}
+```
+
+  > [!NOTE]\
+  > Debe ejecutarse con el mismo token de autenticación en la configuración del mock.
 
 ### Ejecución de Mocks con token
 ```bash
