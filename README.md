@@ -33,7 +33,9 @@ Esta API permite **crear, gestionar y ejecutar mocks de servicios REST** de mane
     - [Templates Dinámicos](#templates-dinámicos)
     - [Ejecutar con Template](#ejecutar-con-template)
     - [Respuesta](#respuesta)
+    - [Configuracion con busqueda con route params](#configuracion-con-busqueda-con-route-params)
     - [Configuracion con token](#configuracion-con-token)
+    - [Ejecutar con busqueda con route params](#ejecutar-con-busqueda-con-route-params)
     - [Ejecución de Mocks con token](#ejecución-de-mocks-con-token)
   - [🔐 Autenticación](#-autenticación)
   - [🚦 Rate Limiting](#-rate-limiting)
@@ -46,6 +48,8 @@ Esta API permite **crear, gestionar y ejecutar mocks de servicios REST** de mane
       - [🧪 Probar Mock con Condiciones (Respuesta Premium)](#-probar-mock-con-condiciones-respuesta-premium)
     - [🧩 Mock con Templates Dinámicos](#-mock-con-templates-dinámicos)
       - [🧪 Probar Mock con Templates](#-probar-mock-con-templates)
+      - [🔧 Crear Mock con Route Params](#-crear-mock-con-route-params)
+      - [🧪 Probar Mock - Producto ID 1 (Laptop Gaming)](#-probar-mock---producto-id-1-laptop-gaming)
     - [📄 Mock con Respuesta XML](#-mock-con-respuesta-xml)
       - [🧪 Probar Mock XML](#-probar-mock-xml)
     - [📝 Mock con Respuesta Texto Plano](#-mock-con-respuesta-texto-plano)
@@ -125,7 +129,8 @@ docker run -p 4000:4000 daniel499/challenge_start:1.5.0
 ```
 - Acceder a la API en `http://localhost:4000`
 
-> [!NOTE] Para poder ejecutar los tests, es necesario levantar la API de forma local (descargar el repositorio)
+> [!NOTE] \
+> Para poder ejecutar los tests, es necesario levantar la API de forma local (descargar el repositorio)
 
 ### 🌐 Variables de Entorno
 | Variable          | Descripción                          |
@@ -274,33 +279,98 @@ Content-Type: application/json
 }
 ```
 
+<!--  -->
+
+### Configuracion con busqueda con route params
+```json
+POST /configure-mock
+Authorization: Bearer 123123123123123
+{
+    "route": "/api/v1/productos",
+    "method": "GET",
+    "statusCode": 200,
+    "responseContent": {
+        "products": [
+            { "id": 1, "name": "Producto Normal", "price": 100 }
+        ]
+    },
+    "conditions": [
+        {
+            "field": "params.categoria",
+            "operator": "equals",
+            "value": "premium",
+            "response": {
+                "products": [
+                    { "id": 1, "name": "Producto Premium", "price": 500 }
+                ]
+            }
+        }
+    ]
+}
+```
+
 ### Configuracion con token
 ```json
 POST /configure-mock
 Authorization: Bearer 123123123123123
 {
-    "route": "/api/users",
-    "method": "GET",
-    "headers": {
-        "authorization": "Bearer user-token-456"
-    },
-    "statusCode": 200,
-    "responseContent": {
-        "users": [
-            {
-                "id": 1,
-                "name": "Juan"
-            },
-            {
-                "id": 2,
-                "name": "María"
-            }
-        ]
+  "route": "/api/v1/productos/prueba/:id",
+  "method": "GET",
+  "statusCode": 200,
+  "responseContent": {
+    "product": {
+      "id": "{{routeParams.id}}",
+      "name": "Producto por defecto",
+      "price": 100
     }
+  },
+  "conditions": [
+    {
+      "field": "routeParams.id",
+      "operator": "equals",
+      "value": "1",
+      "response": {
+        "product": {
+          "id": 1,
+          "name": "Laptop Gaming",
+          "price": 1500,
+          "category": "electronics"
+        }
+      }
+    },
+    {
+      "field": "routeParams.id",
+      "operator": "equals",
+      "value": "2",
+      "response": {
+        "product": {
+          "id": 2,
+          "name": "Mouse Inalámbrico",
+          "price": 25,
+          "category": "electronics"
+        }
+      }
+    },
+    {
+      "field": "routeParams.id",
+      "operator": "equals",
+      "value": "999",
+      "response": {
+        "error": "Producto no encontrado",
+        "code": "PRODUCT_NOT_FOUND"
+      }
+    }
+  ]
 }
 ```
 
-> [!NOTE] Debe ejecutarse con el mismo token de autenticación en la configuración del mock
+### Ejecutar con busqueda con route params
+```bash
+GET /api/v1/productos/prueba/1
+```
+
+> [!NOTE] \
+> Debe ejecutarse con el mismo token de autenticación en la configuración del mock
 
 ### Ejecución de Mocks con token
 ```bash
@@ -414,6 +484,66 @@ curl -X POST http://localhost:4000/configure-mock \
 curl -X POST http://localhost:4000/api/v1/saludo \
   -H "Content-Type: application/json" \
   -d '{ "nombre": "Juan" }'
+```
+#### 🔧 Crear Mock con Route Params
+```bash
+curl -X POST http://localhost:4000/configure-mock \
+  -H "Authorization: Bearer valid-token-123456789" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "route": "/api/v1/productos/prueba/:id",
+    "method": "GET",
+    "statusCode": 200,
+    "responseContent": {
+      "product": {
+        "id": "{{routeParams.id}}",
+        "name": "Producto por defecto",
+        "price": 100
+      }
+    },
+    "conditions": [
+      {
+        "field": "routeParams.id",
+        "operator": "equals",
+        "value": "1",
+        "response": {
+          "product": {
+            "id": 1,
+            "name": "Laptop Gaming",
+            "price": 1500,
+            "category": "electronics"
+          }
+        }
+      },
+      {
+        "field": "routeParams.id",
+        "operator": "equals",
+        "value": "2",
+        "response": {
+          "product": {
+            "id": 2,
+            "name": "Mouse Inalámbrico",
+            "price": 25,
+            "category": "electronics"
+          }
+        }
+      },
+      {
+        "field": "routeParams.id",
+        "operator": "equals",
+        "value": "999",
+        "response": {
+          "error": "Producto no encontrado",
+          "code": "PRODUCT_NOT_FOUND"
+        }
+      }
+    ]
+  }'
+```
+
+#### 🧪 Probar Mock - Producto ID 1 (Laptop Gaming)
+```bash
+curl -X GET http://localhost:4000/api/v1/productos/prueba/1
 ```
 
 ### 📄 Mock con Respuesta XML
