@@ -1,0 +1,28 @@
+{
+  "name": "api_para_mocks_de_servicios_rest",
+  "version": "1.0.0",
+  "description": "Challenge Start Summit - API para mocks de servicios REST",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest --runInBand --detectOpenHandles --forceExit"
+  },
+  "author": "Daniel Dubon",
+  "license": "ISC",
+  "dependencies": {
+    "babel-jest": "^30.0.4",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "uuid": "^11.1.0",
+    "validator": "^13.15.15"
+  },
+  "devDependencies": {
+    "jest": "^30.0.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.3"
+  }
+}
