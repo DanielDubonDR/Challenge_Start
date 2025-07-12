@@ -690,6 +690,12 @@ npm run test
 - 🧠 **Service Layer**
 - 🧭 **Controller Layer**
 
+<!-- Justificacion -->
+
+Se han implementado patrones de diseño para mejorar la mantenibilidad y escalabilidad del código. El uso de **Factory Pattern** permite crear instancias de mocks de manera flexible, mientras que el **Adapter Pattern** facilita la integración con librerías externas. Los **Middlewares** permiten manejar la lógica de autorización y validación de manera modular.
+
+Se trata de tener bajo acoplamiento y alta cohesión, lo que facilita la evolución del sistema sin afectar otras partes del código.
+
 ## 🏗️ Arquitectura
 
 ```
